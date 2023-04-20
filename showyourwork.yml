@@ -25,9 +25,13 @@ dag:
 
 # Externally-hosted datasets, e.g. on Zenodo
 datasets:
-  # 10.5281/zenodo.6468327:
-  #   contents:
-  #     TOI640b.json: src/data/TOI640b.json
+   10.5072/zenodo.1185077:
+     contents:
+       lisa_data_w_cvs.dat: src/data/lisa_data_w_cvs.dat
+       lisa_residual_w_cvs.dat: src/data/lisa_residual_w_cvs.dat
+       psd_w_cvs.dat: src/data/psd_w_cvs.dat
+       psd_no_cvs.dat: src/data/psd_no_cvs.dat
+       noise.dat: src/data/noise.dat
 
 # Custom file dependencies
 dependencies:
