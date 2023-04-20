@@ -1,57 +1,286 @@
-% Define document class
-\documentclass[twocolumn]{aastex631}
+% mnras_template.tex 
+%
+% LaTeX template for creating an MNRAS paper
+%
+% v3.0 released 14 May 2015
+% (version numbers match those of mnras.cls)
+%
+% Copyright (C) Royal Astronomical Society 2015
+% Authors:
+% Keith T. Smith (Royal Astronomical Society)
+
+% Change log
+%
+% v3.0 May 2015
+%    Renamed to match the new package name
+%    Version number matches mnras.cls
+%    A few minor tweaks to wording
+% v1.0 September 2013
+%    Beta testing only - never publicly released
+%    First version: a simple (ish) template for creating an MNRAS paper
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic setup. Most papers should leave these options alone.
+\documentclass[fleqn,usenatbib]{mnras}
+
+% MNRAS is set in Times font. If you don't have this installed (most LaTeX
+% installations will be fine) or prefer the old Computer Modern fonts, comment
+% out the following line
+\usepackage{newtxtext,newtxmath}
+
+% Depending on your LaTeX fonts installation, you might get better results with one of these:
+%\usepackage{mathptmx}
+%\usepackage{txfonts}
+
+% Use vector fonts, so it zooms properly in on-screen viewing software
+% Don't change these lines unless you know what you are doing
+\usepackage[T1]{fontenc}
+
+% Allow "Thomas van Noord" and "Simon de Laguarde" and alike to be sorted by "N" and "L" etc. in the bibliography.
+% Write the name in the bibliography as "\VAN{Noord}{Van}{van} Noord, Thomas"
+\DeclareRobustCommand{\VAN}[3]{#2}
+\let\VANthebibliography\thebibliography
+\def\thebibliography{\DeclareRobustCommand{\VAN}[3]{##3}\VANthebibliography}
+
+
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+
+% Only include extra packages if you really need them. Common packages are:
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	
+\usepackage[dvipsnames]{xcolor}% Advanced maths commands
 \usepackage{showyourwork}
+% \usepackage{amssymb}	% Extra maths symbols
 
-% Begin!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
+\newcommand{\lisa}{{\it LISA}}
+\newcommand{\gaia}{{\it Gaia}}
+
+\newcommand{\kb}[1]{[\textcolor{melon}{KB: #1}]}
+
+% Please keep new commands to a minimum, and use \newcommand not \def to avoid
+% overwriting existing commands. Example:
+%\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+
+% Title of the paper, and the short title which is used in the headers.
+% Keep the title short and informative.
+\title[LISA CVs]{Cataclysmic variables are a key population of gravitational wave sources for LISA}
+%The LISA gravitational wave signal produced by the Galactic cataclysmic variable population}
+
+% The list of authors, and the short list which is used in the headers.
+% If you need two or more lines of authors, add an extra line using \newauthor
+\author[S. Scaringi et al.]{
+S. Scaringi,$^{1}$\thanks{E-mail: simone.scaringi@durham.ac.uk (KTS)}
+K. Breivik,$^{2}$
+T.B. Littenberg$^{3}$
+and C. Knigge$^{4}$
+\\
+% List of institutions
+$^{1}$Centre for Extragalactic Astronomy, Department of Physics, Durham University, South Road, Durham, DH1 3LE\\
+$^{2}$Center for Computational Astrophysics, Flatiron Institute, 162 Fifth Avenue, New York, NY, 10010, USA\\
+$^{3}$NASA Marshall Space Flight Center, Huntsville, Alabama 35811, USA\\
+$^{4}$School of Physics and Astronomy, University of Southampton, Highfield, Southampton SO17 1BJ, UK
+}
+
+% These dates will be filled out by the publisher
+\date{Accepted XXX. Received YYY; in original form ZZZ}
+
+% Enter the current year, for the copyright statements etc.
+\pubyear{2023}
+
+% Don't change these lines
 \begin{document}
+\label{firstpage}
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\maketitle
 
-% Title
-\title{An open source scientific article}
-
-% Author list
-\author{@katiebreivik}
-
-% Abstract with filler text
+% Abstract of the paper
 \begin{abstract}
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna.
-    Donec vehicula augue eu neque, morbi tristique senectus et netus et.
-    Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum.
-    Phasellus eu tellus sit amet tortor gravida placerat.
-    Integer sapien est, iaculis in, pretium quis, viverra ac, nunc.
-    Praesent eget sem vel leo ultrices bibendum.
-    Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac.
-    Curabitur auctor semper nulla donec varius orci eget risus.
-    Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-    Duis eget orci sit amet orci dignissim rutrum.
+AM~CVn stars -- ultracompact binaries in which a white dwarf (WD) accretes material from a fully or partially degenerate donor star -- are well established as an important population of gravitational wave (GW) sources for the planned LISA mission. By contrast, the slightly less compact -- but far more numerous -- cataclysmic variable stars (CVs) have not been studied carefully in this context.  CVs are semi-detached compact binaries with periods in the range $75~\mathrm{min} \lesssim P_{orb} \lesssim 1~\mathrm{day}$ in which a WD accretes from a (roughly) main-sequence or sub-stellar companion. Here, we estimate the predicted gravitational wave signals from the Galactic population of CVs and evaluate their significance for LISA. First, we find that CVs will contribute significantly to the LISA Galactic binary background, thus limiting the mission's sensitivity in the relevant frequency band. Second, at least three known systems are expected to produce strong enough signals to be individually resolved within the first four years of LISA's operation. Third, we predict a spike in the unresolved GW background at a frequency corresponding to the CV minimum orbital period ($f = 2/P_{min} \simeq 0.3~\mathrm{mHz}$). 
+This excess noise may impact the detection of other low signal-to-noise systems near this characteristic frequency. Fourth, we note that the amplitude of the excess noise spike associated with $P_{min}$ can be used to measure the CV space density without the biases and selection effects that plague samples selected from  electromagnetic signals. Our results highlight the need to explicitly include the Galactic CV population in LISA mission planning, both as individual GW sources and generators of background noise. 
 \end{abstract}
 
-% Main body with filler text
+
+% Select between one and six entries from the list of approved keywords.
+% Don't make up new ones.
+\begin{keywords}
+keyword1 -- keyword2 -- keyword3
+\end{keywords}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
-\label{sec:intro}
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna.
-Donec vehicula augue eu neque, morbi tristique senectus et netus et.
-Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum.
-Phasellus eu tellus sit amet tortor gravida placerat.
-Integer sapien est, iaculis in, pretium quis, viverra ac, nunc.
-Praesent eget sem vel leo ultrices bibendum.
-Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac.
-Curabitur auctor semper nulla donec varius orci eget risus.
-Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-Duis eget orci sit amet orci dignissim rutrum.
+The \textit{Laser Interferometer Space Antenna} (\lisa; \citealt{lisa17}) is a space-based gravitational-wave (GW) detector due to launch in 2037. LISA will be sensitive to signals in the frequency range $10^{-5}~\mathrm{Hz} \lesssim f \lesssim 10^{-1}~\mathrm{Hz}$, allowing 
+it to detect GWs produced by Galactic compact binary systems and those associated with coalescing supermassive binary black holes. 
 
-Nam dui ligula, fringilla a, euismod sodales, sollici- tudin vel, wisi.
-Morbi auctor lorem non justo, nam lacus libero, pretium at, lobortis vitae.
-Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna.
-Morbi ac orci et nisl hendrerit mollis, suspendisse ut massa, cras nec ante.
-Pellentesque a nulla cum sociis natoque penatibus et magnis dis parturient.
-Aliquam tincidunt urna, nulla ullamcorper vestibulum turpis.
-Pellentesque cursus luctus mauris \citep{Luger2021}.
+The binary stars \lisa\ is sensitive to are those with orbital periods ranging from minutes to hours. One of the most important and best-studied populations in this period range are the so-called AM~CVn stars. These are ultra-compact binaries in which a white dwarf (WD) accretes material from a fully or partially degenerate companion (e.g. another WD). AM~CVn stars have orbital periods in the range $5~\mathrm{min} \lesssim P_{orb} \lesssim 65~\mathrm{min}$, near the "sweet-spot" of \lisa's sensitivity curve. Several AM~CVn systems have been identified as so-called \lisa\ verification binaries (\citealt{kupfer18,kupfer23}) as their gravitational wave amplitude, and consequently characteristic strain, are strong enough to be resolvable by \lisa\ within the first 4 years of operation. AM~CVn stars are also part of a larger Galactic population of ultra-compact binaries that includes, for example, detached double-degenerate systems. This population is expected to give rise to a broad-band, unresolved GW signal between $\approx 10^{-4}$ -- $10^{-2}$ Hz, which will be detectable by \lisa\, but will also limit the mission's sensitivity to other GW sources in this band \citep{nelemans01, ruiter10, nissanke12, korol17, lamberts19, breivik20, korol22}.  
 
-\bibliography{bib}
+Given the effort that has been expended on predicting the GW signals produced by AM~CVn stars -- both individually and as a population -- it is somewhat surprising that their close cousins, cataclysmic variables (CVs), have not received much attention in this context. CVs are compact binary systems in which a WD accretes material from a (roughly) main-sequence or sub-stellar donor star that fills its Roche lobe. Their orbital periods lie in the range $75~\mathrm{min} \lesssim P_{orb} \lesssim 1~\mathrm{day}$, much of which still falls squarely into the \lisa\ band. Perhaps more importantly, the space density of CVs is much higher than that of AM~CVn stars. The best current estimates are $\rho_{CV} = 4.8^{+0.8}_{-0.6} \times 10^{-6}~\mathrm{pc^{-3}}$\citep{pala20} and $\rho_{AM} = 5\pm 3 \times 10^{-7}~\mathrm{pc^{-3}}$\citep{carter13} for CVs and AM~CVn systems respectively. 
 
+The secular evolution of CVs is driven by angular momentum loss (AMLs) that (initially) shrink the binary orbit, reduce the orbital period and keep the donor in contact with its Roche lobe. As the donor evolves down the main sequence during this evolution, it is driven slightly out of thermal equilibrium and becomes oversized for its mass. Two AML mechanisms are known to be important in driving CV evolution: magnetic braking (MB) and gravitational radiation (GR). MB refers to AML associated with a magnetised wind from the donor star. Since the donor's spin is synchronised with the binary orbit, this ultimately drains angular momentum from the binary as a whole. By contrast, GR-driven AML is directly associated with the emission of GWs.  
+
+There orbital period distribution of CVs contains two distinctive features, as illustrated in Figure~\ref{fig:porb}. First, the there is an obvious dearth of CVs in the "period gap" between $2~\mathrm{hr} \lesssim P_{orb} \lesssim 3~\mathrm{hr}$. Second, there is a "period spike" near the minimum period of $P_{min} \simeq 80~\mathrm{min}$. Both of these features are associated with changes in the structure of the donor star. When a CV reaches the upper edge of the period gap, its donor becomes fully convective. Such stars cannot support the roughly dipolar magnetic fields found in partially radiative stars, since those fields are anchored in the tachocline (the interface between the radiative and convective zone). As a result, the magnetic field topology of the donor must change at this point, and it is thought that MB-driven AML is also severely reduced. This causes a temporary loss of contact, allowing the donor to shrink back to its MS radius. The system then evolves through the period gap as a detached binary until the AML due to GR (and perhaps also due to residual MB or other mechanisms) has shrunk the orbit sufficiently for contact to be re-established. Mass transfer then resumes at the lower edge of the gap.
+
+The period minimum is also associated with a change in the structure of the donor star. Below the period gap, the thermal time-scale of the donor increases significantly faster than the mass-loss time-scale, causing the donor's mass-radius index to evolve from a near-thermal equilibrium value of  $\zeta_{th} \simeq 1$ towards the adiabatic value of $\zeta_{ad} = -1/3$. However, the geometry of semi-detached binary system implies that the donor must also satisfy an orbital period - density relation. It is easy to show from this that the orbital period must start to increase again once the mass-radius index of the donor reaches $\zeta = 1/3$. In practice, this happens at $P_{min} \simeq 80$~min and roughly coincides with the transition of the donor from a stellar to a sub-stellar object. The period minimum is expected -- and observed -- to coincide with a pile-up in the CV period distribution, the so-called "period spike".
+
+Given their (relatively) high space density and the distinctive nature of their period distribution, CVs merit a close look as potential GW sources for \lisa\. We are aware of only two earlier attempts to do this. First, \cite{HBW90} included CVs as one of the six types of Galactic binary systems for which they estimated GW signals. They found them to be a significant, but sub-dominant population compared to W~UMa stars and "close WD binaries" (they did not explicitly consider semi-detached -- i.e. AM~CVn systems -- as part of the latter group). Second, \cite{MAA00} explicitly considered CVs as a population of interest for \lisa\. They predicted the GW signals for systems in a catalogue of CVs available at the time, finding that some of these ought to be detectable by the mission. 
+
+Since these pioneering studies were published, our understanding of the Galactic CV population -- and also our understanding of \lisa\ as a GW detector -- has improved significantly. For example, \gaia\ has provided parallaxes for almost all of the closest CVs. This has made it possible to construct the first (nearly) volume-limited sample of CV. Similarly, our ability to estimate system parameters -- notably component masses -- for CVs in which those parameters have not yet been directly measured is also on considerably firmer ground (\citealt{knigge06,knigge11,savoury11,carter13}). Finally, the \lisa\ mission concept is now sufficiently advanced -- and supported by well-tested numerical tools -- to allow a careful evaluation of potential GW source populations as viable targets for \lisa. The goal of our work here is to leverage these improvements to predict the GW signals produced by the Galactic CV population and to assess if and how they will be detectable by \lisa.
+
+%In Section \ref{sec:gwemission} we summarise the equations used to infer GW amplitude and strain. Section \ref{sec:150pc} describes the volume-limited sample of CVs up to 150pc as presented by %\cite{pala20}. This set of CVs is used to provide estimates of the %\lisa\ characteristic strain measurements for these systems, and %discusses how some of these CVs should be detectable by \lisa\ %withing the first 4 years of operations. Section \ref{sec:500pc} %employs the inferred space density from \cite{pala20} to explore the %effect of the local $1\,\rm{kpc}$ CV population to the foreground %\lisa\ noise. Finally Section \ref{sec:discussion} summar/ises the %prospects of GW detection of CVs with \lisa\ and discusses the %potential of using \lisa\ to constrain binary evolution models by %quantifying the CV GW foreground noise.
+
+
+\section{GW emission from CVs} \label{sec:gwemission}
+
+%Gravitational radiation for a typical CV (and binaries in general) can be modeled as a quasi-monochromatic signal characterized by 8 parameters: GW frequency $f$, heliocentric amplitude ${\cal A}$, frequency derivative $\dot{f}$, sky coordinates $(\lambda, \beta)$, inclination angle $\iota$, polarization angle $\psi$, and initial phase $\phi_0$. 
+
+Whether a binary is detectable by \lisa\ depends on the GW amplitude of each source, which, when averaged over the \lisa\ constellation orbit, and orbital inclination, depends on the masses of the binary components, the orbital period, and the distance to the source. The GW frequency and from a typical CV (and circular binaries in general) is given by
+\begin{equation}
+    f = 2/P_{\rm orb},
+\end{equation}
+with $P_{\rm orb}$ being the binary's orbital period and $f$ being the GW frequency. The GW amplitude is given by
+\begin{equation}\label{eqn:amp}
+    \mathcal{A} = \frac{2 (G \mathcal{M})^{5/3} }{c^4 d} (\pi f)^{2/3}.
+\end{equation}
+where $G$ and $c$ are the Gravitational constant and speed of light respectively, and $d$ is the distance to the binary. The chirp mass $\mathcal{M}$ is defined as
+\begin{equation}\label{eqn:mchirp}
+    \mathcal{M} = \frac{(m_1 m_2)^{3/5}}{(m_1 + m_2)^{1/5}}, 
+\end{equation}
+for component masses $m_1$ and $m_2$.
+
+Since CVs orbit with $f_{\rm{GW}} < 1\,\rm{mHz}$, their orbital evolution occurs on long-enough timescales that LISA is unlikely to observe any changes to the GW frequency of any given source. This means that the total signal to noise ratio can be successfully approximated as
+\begin{equation}\label{eq:SNR}
+    SNR = \frac{ASD}{\sqrt{S_n}} = \frac{\mathcal{A}\sqrt{T_{\rm{obs}}}}{\sqrt{S_n}},
+\end{equation}
+\noindent where $T_{\rm{obs}}$ is the observation duration and $S_n$ is the power spectral density sensitivity of \lisa. We use LEGWORK to compute these values (\citealt{LEGWORK_apjs,LEGWORK_joss}).
+
+
+
+\subsection{150pc sample} \label{sec:150pc}
+
+\cite{pala20} presents the first volume-limited sample of CVs selected using parallax measurements provided by \gaia. The sample consists of $42$ CVs within $150\,\rm{pc}$, and is quantified to be $\approx 75\%$ complete. The sample is used to investigate the intrinsic properties of the Galactic CV population, and more specifically to infer the space density of CVs. Taking into account the missing systems due to completeness, the space density is found to be $\rho_0\simeq4.8 \times 10^{-6}$pc$^{-3}$. This value is based on the assumption that the CV population follows an axisymmetric Galactic disc profile of the form
+\begin{equation}
+\label{eq:disk}
+    \rho = \rho_{0} \exp \left(-\frac{|z|}{h}\right)
+\end{equation}
+
+\noindent where the CV population scale height $h$ is taken to be 280pc and $z$ is the distance above the Galactic plane. In reality the scale height $h$ may increase for older CV systems (those with smaller orbital periods). However, the local CV population does not allow inference of $h(P_{\rm{orb}})$ due to relatively low numbers of observed CVs. Nevertheless, \cite{pala20} quote different space density values for different scale height assumptions, which are all found to be within a factor of 2. Here we employ the quoted canonical space density measurement of $\rho_0=4.8 \times 10^{-6}$pc$^{-3}$ and a scale height of $h=280$pc.
+
+In order to calculate the GW signature of the nearby CV population, we use an empirically motivated scheme to assign orbital periods based on the \citet{pala20} $150\,\rm{pc}$ sample, then assuming a fiducial accretor mass of $0.75\,\rm{M_{\odot}}$, assign a donor mass based on the evolutionary track from \citet{knigge11}. As the orbital period of \gaia\ J154008.28$-$392917.6 is the only unknown in the sample, we arbitrarily set this to 81 minutes. 
+
+We augment this set by generating the missing systems from the \cite{pala20} sample. These simulated systems are distributed to follow the axisymmetric Galactic disk profile and measured space density from \cite{pala20}. To assign orbital periods to the simulated systems we attempt to resample the known orbital period distribution from observed CV systems in the \cite{pala20} sample. We first smooth this distribution to account for the observed low number of systems using a kernel density estimator. We then sample \textbf{12} systems from this smoothed orbital period distribution. Figure \ref{fig:porb} shows the orbital period distribution of the \cite{pala20} sample, as well as the 150pc sample used here (containing \textbf{54} systems, of which 42 are shared with\cite{pala20}). Similarly to the observed sample, we assign the donor mass based on the revised tracks of \cite{knigge11} assuming $m_1=0.75$M$_{\odot}$.
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/fig1.pdf}
+    \caption{ CAPTION   }
+    \label{fig:porb}
+    \script{fig1.py}
+\end{figure}
+
+The results of computing the characteristic strain after 4 years of \lisa\ operations are shown in Fig. \ref{fig:asd}, together with \textbf{THE SENSITIVITY CURVE}. Although several systems are found to lie close to the conventionally adopted \lisa\ sensitivity limit, 3 systems in particular attain a signal-to-noise detection $>4\sigma$. Unsurprisingly, these are the 3 closest systems, namely WZ Sge, VW Hyi and EX Hya. It is also interesting to note that there may be the possibility of detecting objects through their GW emission which have been missed due to electromagnetic detection biases and not included in the 150pc volume-limited sample. 
+
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/fig2.pdf}
+    \caption{\textbf{ADD text } }
+    \label{fig2.py}
+    \script{fig2.py}
+\end{figure}
+
+
+
+\subsection{1kpc sample} \label{sec:500pc}
+
+To simulate a representative sample of CVs within 1kpc we use the same methodology as described in previous section, using the same space density of $\rho_0=4.8 \times 10^{-6}$pc$^{-3}$ and scale height of $h=280$pc. The 150pc sample (including the \cite{pala20} sample) is retained.  
+
+The sample contains \textbf{XX} sources, and we plot in Fig. \ref{fig:asd} the resulting characteristic strain after 4 years of \lisa\ operations. Clearly most targets will not produce strong enough GW signals to be individually resolvable. However, given the pile-up of CVs at the orbital period minimum, the population of unresolved CVs will produce a clear excess in the Galactic GW foreground at frequencies higher than 0.2 mHz. Given the pile-up of CVs at the period minimum, this excess noise caused by the unresolved population will increase up to 0.4 mHz and abruptly diminish at higher frequency.
+
+This very characteristic GW noise profile is shown in in Fig. \ref{fig:isd} where we show.....
+
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/fig3.pdf}
+    \caption{ \textbf{ADD text } }
+    \label{fig:isd}
+    \script{fig3.py}
+\end{figure}
+
+
+
+
+
+
+\section{Discussion and Conclusion} \label{sec:discussion}
+
+
+
+
+
+
+Understanding the Galactic population of binaries that \lisa\ will be sensitive to is crucial for correctly modelling and quantifying the \lisa\ sensitivity.
+
+
+
+Note that both 3 individually resolvable systems, as well as the amplitude of the noise excess are expected to be lower estimates due to potentially under-represented population of period bouncers that are not included here.
+
+
+Note assumption of constant scale height in this work. Possibility of resolving space density as a function of scale height and Porb?
+
+
+
+\section*{Acknowledgements}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Data Availability}
+
+DON'T FORGET THIS SECTION
+
+
+%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
+
+% The best way to enter references is to use BibTeX:
+
+\bibliographystyle{mnras}
+\bibliography{bib.bib} % if your bibtex file is called example.bib
+
+
+% Alternatively you could enter them by hand, like this:
+% This method is tedious and prone to error if you have lots of references
+%\begin{thebibliography}{99}
+%\bibitem[\protect\citeauthoryear{Author}{2012}]{Author2012}
+%Author A.~N., 2013, Journal of Improbable Astronomy, 1, 1
+%\bibitem[\protect\citeauthoryear{Others}{2013}]{Others2013}
+%Others S., 2012, Journal of Interesting Stuff, 17, 198
+%\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% APPENDICES %%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\section{Some extra material}
+
+If you want to present additional material which would interrupt the flow of the main paper,
+it can be placed in an Appendix which appears after the list of references.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Don't change these lines
+\bsp	% typesetting comment
+\label{lastpage}
 \end{document}
+
+% End of mnras_template.tex

@@ -31,10 +31,19 @@ datasets:
 
 # Custom file dependencies
 dependencies:
-  # src/scripts/my_script.py:
-  #   - src/data/dataset_for_my_script.dat
-  # src/tex/ms.tex:
-  #   - src/tex/stylesheet.tex
+   src/scripts/fig1.py:
+     - src/data/dat_maxDistance_1000.txt
+     - src/data/Pala_2020_dat_combo.h5
+   src/scripts/fig2.py:
+     - src/data/dat_maxDistance_1000.txt
+   src/scripts/fig3.py:
+     - src/data/lisa_data_w_cvs.dat
+     - src/data/lisa_residual_w_cvs.dat
+     - src/data/psd_w_cvs.dat
+     - src/data/psd_no_cvs.dat
+     - src/data/noise.dat
+   src/tex/ms.tex:
+     - src/tex/mnras.cls
 
 # Name of the `.tex` manuscript and corresponding `.pdf` article
 ms_name: ms
@@ -70,7 +79,7 @@ scripts:
 # Display of the `showyourwork` stamp on first page
 stamp:
   # Show the stamp?
-  enabled: true
+  enabled: false
   # Stamp angle in degrees
   angle: -20.0
   # Stamp size in inches
