@@ -177,6 +177,9 @@ if __name__ == '__main__':
     sigma_m1 = 0.001
     sigma_m2 = 0.001
 
+    # FIX A SEED TO REPRODUCE THE SAMPLE
+    np.random.seed(42)
+
     # first sample the population
     # sample the population positions and size based on Pala+2020 distribution & space density
     x, y, z = sample_position_from_Pala_2020(rho_0=4.8e-6, h=280, dist_max=max_distance)
@@ -238,7 +241,7 @@ if __name__ == '__main__':
     dat[:, 6] = c_gal.z
 
     # save the data
-    np.savetxt(paths.data / f"dat_maxDistance_{int(max_distance)}.txt", dat, delimiter=',', header="m1[Msun], m2[Msun], f_gw[Hz], inclination[rad], x_gal[kpc], y_gal[kpc], z_gal[kpc], Pala_reassigned", fmt='%.10f')
+    np.savetxt(paths.data / f"dat_maxDistance_{int(max_distance)}_final.txt", dat, delimiter=',', header="m1[Msun], m2[Msun], f_gw[Hz], inclination[rad], x_gal[kpc], y_gal[kpc], z_gal[kpc], Pala_reassigned", fmt='%.10f')
     
     # Reparameterize and print files in format needed for LISA codes
     
@@ -275,4 +278,4 @@ if __name__ == '__main__':
     # NOTE: %.10f does not print enough digits for the GW amplitude. Use %.10e instead.
     dat_gw = np.vstack([f0,fdot,np.cos(np.pi/2 - theta),phi,A_gw,iota,polarization,phase]).T
     #header="f[Hz], fdot[Hz/s], cos colat, lon[rad], Amp, inc[rad], pol[rad], phase[rad]"
-    np.savetxt(paths.data / f"dat_maxDistance_{int(max_distance)}_GW.txt", dat_gw, delimiter=' ', fmt='%.10e') #no header to make it easier to add to the full galaxy file
+    np.savetxt(paths.data / f"dat_maxDistance_{int(max_distance)}_GW_final.txt", dat_gw, delimiter=' ', fmt='%.10e') #no header to make it easier to add to the full galaxy file

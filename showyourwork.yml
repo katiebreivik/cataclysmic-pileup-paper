@@ -36,10 +36,10 @@ datasets:
 # Custom file dependencies
 dependencies:
    src/scripts/fig1.py:
-     - src/data/dat_maxDistance_1000.txt
+     - src/data/dat_maxDistance_1000_final.txt
      - src/data/Pala_2020_dat_combo.h5
    src/scripts/fig2.py:
-     - src/data/dat_maxDistance_1000.txt
+     - src/data/dat_maxDistance_1000_final.txt
    src/scripts/fig3.py:
      - src/data/lisa_data_w_cvs.dat
      - src/data/lisa_residual_w_cvs.dat

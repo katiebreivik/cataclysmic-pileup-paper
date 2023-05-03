@@ -43,26 +43,39 @@ f_gw = []
 h_f_local = []
 m_c_local = []
 f_gw_local = []
-dat = sample_kpc_population(max_distance, mu_m1, sigma_m1, sigma_m2)
-local_mask = dat[:,7] == 2
+dat = pd.read_csv(paths.data / "dat_maxDistance_1000_final.txt")
+dat = dat.rename(columns={'# m1[Msun]':'m1',
+                          ' m2[Msun]':'m2',
+                          ' inclination[rad]':'inc',
+                          ' f_gw[Hz]':'f_gw',
+                          ' x_gal[kpc]':'x', 
+                          ' y_gal[kpc]':'y', 
+                          ' z_gal[kpc]':'z',
+                          ' Pala_reassigned' : 'pala'})
 
-mc = mc = utils.chirp_mass(dat[:,0] * u.Msun, dat[:,1] * u.Msun)
-c = SkyCoord(dat[:,4], dat[:,5], dat[:,6], unit=u.kpc, frame='galactocentric')
+mc = utils.chirp_mass(dat.m1.values * u.Msun, dat.m2.values * u.Msun)
+c = SkyCoord(dat.x.values, dat.y.values, dat.z.values, unit=u.kpc, frame='galactocentric')
 dist = c.icrs.distance
-ASD = strain.h_0_n(m_c=mc, f_orb=dat[:,2]/2 * u.Hz,  
+ASD = strain.h_0_n(m_c=mc, f_orb=dat.f_gw.values/2 * u.Hz,  
                    ecc=np.zeros(len(mc)), dist=dist, 
                    n=2, position=None, polarisation=None, 
                    inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
-
 fig = plt.figure(figsize=(6, 4))
 
-#sns.kdeplot(x=np.log10(f_gw), y=np.log10(np.array(h_f).flatten()), levels=5, bw_adjust=1.5, color="blue", fill=False, alpha=1, label='1 kpc, 50 realizations')
-#sns.kdeplot(x=np.log10(f_gw_local), y=np.log10(np.array(h_f_local).flatten()), levels=5, bw_adjust=1.5, color="grey", fill=False, alpha=1, label='150 pc, 50 realizations')
-Pala_mask = dat[:,7] == 1
+dat_Pala = dat.loc[dat.pala == 1]
+mc_Pala = utils.chirp_mass(dat_Pala.m1.values * u.Msun, dat_Pala.m2.values * u.Msun)
+c_Pala = SkyCoord(dat_Pala.x.values, dat_Pala.y.values, dat_Pala.z.values, unit=u.kpc, frame='galactocentric')
+dist_Pala = c_Pala.icrs.distance
 
-plt.scatter(dat[Pala_mask, 2], ASD[Pala_mask], label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
-plt.scatter(dat[:,2], ASD, label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
+ASD_Pala = strain.h_0_n(m_c=mc_Pala, f_orb=dat_Pala.f_gw.values/2 * u.Hz,  
+                        ecc=np.zeros(len(mc_Pala)), dist=dist_Pala, 
+                        n=2, position=None, polarisation=None, 
+                        inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
+
+
+plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
+plt.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
 plt.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
 plt.xlim(10**(-4.5), 10**(-2.5))
 plt.ylim(10**(-20), 10**(-16))

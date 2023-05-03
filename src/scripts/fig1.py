@@ -24,7 +24,7 @@ params = {'figure.figsize': (6, 4),
 plt.rcParams.update(params)
 
 max_distance = 1000.0
-dat = pd.read_csv(paths.data / "dat_maxDistance_1000.txt")
+dat = pd.read_csv(paths.data / "dat_maxDistance_1000_final.txt")
 dat = dat.rename(columns={'# m1[Msun]':'m1',
                           ' m2[Msun]':'m2',
                           ' inclination[rad]':'inc',
