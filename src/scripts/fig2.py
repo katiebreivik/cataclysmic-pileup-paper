@@ -26,7 +26,6 @@ params = {'figure.figsize': (6, 4),
           'ytick.labelsize': 0.7 * fs}
 plt.rcParams.update(params)
 
-n_realizations = 1
 
 ## THESE ARE FIXED FOR THIS STUDY
 max_distance = 1000.0 # u.kpc
@@ -44,43 +43,34 @@ f_gw = []
 h_f_local = []
 m_c_local = []
 f_gw_local = []
-for ii in range(n_realizations):
-    dat = sample_kpc_population(max_distance, mu_m1, sigma_m1, sigma_m2)
-    local_mask = dat[:,7] == 2
+dat = sample_kpc_population(max_distance, mu_m1, sigma_m1, sigma_m2)
+local_mask = dat[:,7] == 2
 
-    mc = mc = utils.chirp_mass(dat[:,0] * u.Msun, dat[:,1] * u.Msun)
-    c = SkyCoord(dat[:,4], dat[:,5], dat[:,6], unit=u.kpc, frame='galactocentric')
-    dist = c.icrs.distance
-
-    ASD = strain.h_0_n(m_c=mc, f_orb=dat[:,2]/2 * u.Hz,  
-                       ecc=np.zeros(len(mc)), dist=dist, 
-                       n=2, position=None, polarisation=None, 
-                       inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
-
-    h_f.extend(ASD)
-    m_c.extend(mc.value)
-    f_gw.extend(dat[:,2])
-    
-    h_f_local.extend(ASD[local_mask])
-    m_c_local.extend(mc.value[local_mask])
-    f_gw_local.extend(dat[local_mask,2])
+mc = mc = utils.chirp_mass(dat[:,0] * u.Msun, dat[:,1] * u.Msun)
+c = SkyCoord(dat[:,4], dat[:,5], dat[:,6], unit=u.kpc, frame='galactocentric')
+dist = c.icrs.distance
+ASD = strain.h_0_n(m_c=mc, f_orb=dat[:,2]/2 * u.Hz,  
+                   ecc=np.zeros(len(mc)), dist=dist, 
+                   n=2, position=None, polarisation=None, 
+                   inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
 
 fig = plt.figure(figsize=(6, 4))
 
 #sns.kdeplot(x=np.log10(f_gw), y=np.log10(np.array(h_f).flatten()), levels=5, bw_adjust=1.5, color="blue", fill=False, alpha=1, label='1 kpc, 50 realizations')
 #sns.kdeplot(x=np.log10(f_gw_local), y=np.log10(np.array(h_f_local).flatten()), levels=5, bw_adjust=1.5, color="grey", fill=False, alpha=1, label='150 pc, 50 realizations')
-local_mask = dat[:,7] == 2
 Pala_mask = dat[:,7] == 1
 
-plt.scatter(np.log10(dat[Pala_mask, 2]), np.log10(ASD[Pala_mask]), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
-plt.scatter(np.log10(f_gw), np.log10(h_f), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
-plt.plot(np.log10(frequency_range.value), np.log10(LISA.value**0.5), lw=2, c='black', ls='--', label='instrument noise')   
-plt.xlim(-4.5, -2.5)
-plt.ylim(-20, -16)
+plt.scatter(dat[Pala_mask, 2], ASD[Pala_mask], label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
+plt.scatter(dat[:,2], ASD, label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
+plt.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
+plt.xlim(10**(-4.5), 10**(-2.5))
+plt.ylim(10**(-20), 10**(-16))
 plt.xlabel('GW frequency [Hz]', size=12)
 plt.ylabel('ASD [Hz$^{-1/2}$]', size=12)
 plt.tick_params('both', labelsize=10)
+plt.xscale('log')
+plt.yscale('log')
 plt.legend(prop={'size':12})
 plt.tight_layout()
 
