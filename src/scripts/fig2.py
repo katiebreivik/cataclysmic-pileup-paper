@@ -73,8 +73,8 @@ fig = plt.figure(figsize=(6, 4))
 local_mask = dat[:,7] == 2
 Pala_mask = dat[:,7] == 1
 
-plt.scatter(np.log10(dat[Pala_mask, 2]), np.log10(ASD[Pala_mask]), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=teal)
-plt.scatter(np.log10(f_gw), np.log10(h_f), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=orange)
+plt.scatter(np.log10(dat[Pala_mask, 2]), np.log10(ASD[Pala_mask]), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
+plt.scatter(np.log10(f_gw), np.log10(h_f), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
 plt.plot(np.log10(frequency_range.value), np.log10(LISA.value**0.5), lw=2, c='black', ls='--', label='instrument noise')   
 plt.xlim(-4.5, -2.5)
 plt.ylim(-20, -16)

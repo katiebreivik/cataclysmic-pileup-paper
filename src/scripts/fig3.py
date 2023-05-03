@@ -31,7 +31,7 @@ noise=np.loadtxt(paths.data / 'noise.dat')
 
 plt.plot(data[:,0],np.sqrt(data[:,1]*data[:,1]+data[:,2]*data[:,2]),label='data',color="gray")   
 plt.plot(residual[:,0],np.sqrt(residual[:,1]*residual[:,1]+residual[:,2]*residual[:,2]),label='residual',color="lightgray")   
-plt.plot(cv_confusion[:,0],np.sqrt(cv_confusion[:,1]),label='cv confusion',color=orange, linewidth=3)   
+plt.plot(cv_confusion[:,0],np.sqrt(cv_confusion[:,1]),label='cv confusion',color=teal, linewidth=3)   
 plt.plot(wdwd_confusion[:,0],np.sqrt(wdwd_confusion[:,1]),label='wdwd confusion',color=salmon, linewidth=1.5)   
 plt.plot(noise[:,0],np.sqrt((noise[:,3]-noise[:,4])/2),label='instrument noise',color="black", linestyle='dashed', lw=2)   
 

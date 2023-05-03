@@ -38,8 +38,8 @@ PT = pd.read_hdf(paths.data / 'Pala_2020_dat_combo.h5')
 
 
 plt.figure(figsize=(6, 4))
-plt.hist(PT.porb/60, density=True, histtype='step', bins=50, label='Pala+2020', lw=1.5, color=teal)
-plt.hist(1/(dat.f_gw/2) / 3600, bins=200, density=True, histtype='step', label=f'{int(max_distance/1000)} kpc', color=orange, lw=1.5)
+plt.hist(PT.porb/60, density=True, histtype='step', bins=50, label='Pala+2020', lw=1.5, color=orange)
+plt.hist(1/(dat.f_gw/2) / 3600, bins=200, density=True, histtype='step', label=f'{int(max_distance/1000)} kpc', color=teal, lw=1.5)
 plt.xlabel('porb [hr]', size=12)
 plt.ylabel('count density', size=12)
 plt.legend(prop={'size':12})
