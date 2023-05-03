@@ -10,4 +10,5 @@ dependencies:
       - scipy
       - legwork
       - h5py
+      - seaborn
 

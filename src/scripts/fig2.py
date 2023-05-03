@@ -2,65 +2,86 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import paths
-import scipy
 import astropy.units as u
 from legwork import strain, psd, utils
 from astropy.coordinates import SkyCoord
+from CV_pop_create import sample_kpc_population
+import seaborn as sns
 
+# set the default font and fontsize
+plt.rc('font', family='serif')
+plt.rcParams['text.usetex'] = False
+fs = 12
+dark_green = '#264653'
+teal = '#2a9d8f'
+yellow =  '#e9c46a'
+orange = '#f4a261'
+salmon = '#e76f51'
 
-dat = pd.read_csv(paths.data / "dat_maxDistance_1000.txt")
-dat = dat.rename(columns={'# m1[Msun]':'m1',
-                          ' m2[Msun]':'m2',
-                          ' inclination[rad]':'inc',
-                          ' f_gw[Hz]':'f_gw',
-                          ' x_gal[kpc]':'x', 
-                          ' y_gal[kpc]':'y', 
-                          ' z_gal[kpc]':'z',
-                          ' Pala_reassigned' : 'pala'})
+# update various fontsizes to match
+params = {'figure.figsize': (6, 4),
+          'legend.fontsize': fs,
+          'axes.labelsize': fs,
+          'xtick.labelsize': 0.7 * fs,
+          'ytick.labelsize': 0.7 * fs}
+plt.rcParams.update(params)
 
-mc = utils.chirp_mass(dat.m1.values * u.Msun, dat.m2.values * u.Msun)
-c = SkyCoord(dat.x, dat.y, dat.z, unit=u.kpc, frame='galactocentric')
-dist = c.icrs.distance
+n_realizations = 1
 
-ASD = strain.h_0_n(m_c=mc, f_orb=dat['f_gw'].values/2 * u.Hz,  
-                   ecc=np.zeros(len(mc)), dist=dist, 
-                   n=2, position=None, polarisation=None, 
-                   inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
+## THESE ARE FIXED FOR THIS STUDY
+max_distance = 1000.0 # u.kpc
+mu_m1 = 0.7
+sigma_m1 = 0.001
+sigma_m2 = 0.001
+
 frequency_range=np.logspace(-5, 0, 1000) * u.Hz
-LISA = psd.lisa_psd(frequency_range, approximate_R=False, confusion_noise='robson19')
-ind, = np.where(dat.pala == 1)
-indD, = np.where(dat.pala==2)
+LISA = psd.lisa_psd(frequency_range, approximate_R=False, confusion_noise=None)
+
+h_f = []
+m_c = []
+f_gw = []
+
+h_f_local = []
+m_c_local = []
+f_gw_local = []
+for ii in range(n_realizations):
+    dat = sample_kpc_population(max_distance, mu_m1, sigma_m1, sigma_m2)
+    local_mask = dat[:,7] == 2
+
+    mc = mc = utils.chirp_mass(dat[:,0] * u.Msun, dat[:,1] * u.Msun)
+    c = SkyCoord(dat[:,4], dat[:,5], dat[:,6], unit=u.kpc, frame='galactocentric')
+    dist = c.icrs.distance
+
+    ASD = strain.h_0_n(m_c=mc, f_orb=dat[:,2]/2 * u.Hz,  
+                       ecc=np.zeros(len(mc)), dist=dist, 
+                       n=2, position=None, polarisation=None, 
+                       inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
+
+    h_f.extend(ASD)
+    m_c.extend(mc.value)
+    f_gw.extend(dat[:,2])
+    
+    h_f_local.extend(ASD[local_mask])
+    m_c_local.extend(mc.value[local_mask])
+    f_gw_local.extend(dat[local_mask,2])
 
 
-fig = plt.figure(figsize=(8, 6))
+fig = plt.figure(figsize=(6, 4))
 
-# Compute the 2D histogram
-hist, x_edges, y_edges = np.histogram2d(np.squeeze(dat.f_gw), np.squeeze(ASD), bins=50)
+#sns.kdeplot(x=np.log10(f_gw), y=np.log10(np.array(h_f).flatten()), levels=5, bw_adjust=1.5, color="blue", fill=False, alpha=1, label='1 kpc, 50 realizations')
+#sns.kdeplot(x=np.log10(f_gw_local), y=np.log10(np.array(h_f_local).flatten()), levels=5, bw_adjust=1.5, color="grey", fill=False, alpha=1, label='150 pc, 50 realizations')
+local_mask = dat[:,7] == 2
+Pala_mask = dat[:,7] == 1
 
-# Define the contour levels
-levels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-          
-# Smooth the data using a Gaussian filter
-sigma = 2  # Adjust this parameter to control the smoothing strength
-smoothed_hist = scipy.ndimage.gaussian_filter(hist, sigma)
-
-# Plot the contour lines
-plt.contour(x_edges[:-1], y_edges[:-1], smoothed_hist.T, levels=levels)
-
-
-# Plot the rest
-plt.plot(frequency_range, LISA**0.5, lw=1, c='black')   
-plt.scatter(dat.f_gw, ASD, s=5, alpha= 0.5, label='1000 pc sample')
-plt.scatter(dat.loc[dat.pala == 2].f_gw, ASD[indD], s=20, label='150pc')
-plt.scatter(dat.loc[dat.pala == 1].f_gw, ASD[ind], s=20, label='Pala+2020')
-plt.legend(prop={'size':12})
-plt.yscale('log')
-plt.xscale('log')
-plt.xlim(9e-5, 1e-3)
-plt.ylim(1e-18, 3e-17)
+plt.scatter(np.log10(dat[Pala_mask, 2]), np.log10(ASD[Pala_mask]), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=teal)
+plt.scatter(np.log10(f_gw), np.log10(h_f), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=orange)
+plt.plot(np.log10(frequency_range.value), np.log10(LISA.value**0.5), lw=2, c='black', ls='--', label='instrument noise')   
+plt.xlim(-4.5, -2.5)
+plt.ylim(-20, -16)
 plt.xlabel('GW frequency [Hz]', size=12)
 plt.ylabel('ASD [Hz$^{-1/2}$]', size=12)
 plt.tick_params('both', labelsize=10)
+plt.legend(prop={'size':12})
 plt.tight_layout()
 
 plt.savefig(paths.figures / "fig2.pdf")
