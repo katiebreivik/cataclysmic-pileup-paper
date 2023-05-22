@@ -12,7 +12,7 @@ salmon = '#e76f51'
 
 # set the default font and fontsize
 plt.rc('font', family='serif')
-plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = False
 fs = 12
 
 # update various fontsizes to match

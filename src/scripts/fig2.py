@@ -10,7 +10,7 @@ import seaborn as sns
 
 # set the default font and fontsize
 plt.rc('font', family='serif')
-plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = False
 fs = 12
 dark_green = '#264653'
 teal = '#2a9d8f'
