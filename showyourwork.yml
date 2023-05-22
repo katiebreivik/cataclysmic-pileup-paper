@@ -25,13 +25,15 @@ dag:
 
 # Externally-hosted datasets, e.g. on Zenodo
 datasets:
-   10.5072/zenodo.1185077:
+   10.5281/zenodo.7957134:
      contents:
        lisa_data_w_cvs.dat: src/data/lisa_data_w_cvs.dat
        lisa_residual_w_cvs.dat: src/data/lisa_residual_w_cvs.dat
        psd_w_cvs.dat: src/data/psd_w_cvs.dat
        psd_no_cvs.dat: src/data/psd_no_cvs.dat
        noise.dat: src/data/noise.dat
+       dat_maxDistance_1000_final.txt: src/data/dat_maxDistance_1000_final.txt
+
 
 # Custom file dependencies
 dependencies:

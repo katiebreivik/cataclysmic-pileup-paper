@@ -42,7 +42,7 @@ plt.xlim(1e-4, 4e-3)
 plt.ylim(1e-24, 1e-18)
 
 plt.xlabel('GW frequency [Hz]', size=16)
-plt.ylabel('ASD [Hz$^{-1/2}$]', size=16)
+plt.ylabel(r'ASD$_{\rm{A}}$ [Hz$^{-1/2}$]', size=16)
 plt.tick_params('both', labelsize=12)
 plt.tight_layout()
 

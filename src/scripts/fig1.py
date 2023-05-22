@@ -12,7 +12,7 @@ salmon = '#e76f51'
 
 # set the default font and fontsize
 plt.rc('font', family='serif')
-plt.rcParams['text.usetex'] = False
+plt.rcParams['text.usetex'] = True
 fs = 12
 
 # update various fontsizes to match
@@ -20,7 +20,8 @@ params = {'figure.figsize': (6, 4),
           'legend.fontsize': fs,
           'axes.labelsize': fs,
           'xtick.labelsize': 0.7 * fs,
-          'ytick.labelsize': 0.7 * fs}
+          'ytick.labelsize': 0.7 * fs,
+          'mathtext.fontset': 'cm'}
 plt.rcParams.update(params)
 
 max_distance = 1000.0
@@ -82,7 +83,7 @@ fig = plt.figure(figsize=(6, 4))
 ax1 = fig.add_subplot(111)
 ax1.hist(PT.porb/60, density=True, histtype='step', bins=50, label='Pala+2020', lw=1.5, color=orange)
 ax1.hist(1/(dat.f_gw/2) / 3600, bins=200, density=True, histtype='step', label=f'{int(max_distance/1000)} kpc', color=teal, lw=1.5)
-ax1.set_xlabel('porb [hr]', size=12)
+ax1.set_xlabel(r'$P_{\rm{orb}}$ [hr]', size=12)
 ax1.set_ylabel('normalized counts', size=12)
 ax1.tick_params('both', labelsize=10)
 ax1.set_xlim(1, 11)

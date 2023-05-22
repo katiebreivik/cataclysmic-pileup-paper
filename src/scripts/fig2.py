@@ -10,7 +10,7 @@ import seaborn as sns
 
 # set the default font and fontsize
 plt.rc('font', family='serif')
-plt.rcParams['text.usetex'] = False
+plt.rcParams['text.usetex'] = True
 fs = 12
 dark_green = '#264653'
 teal = '#2a9d8f'
@@ -64,17 +64,26 @@ ASD = strain.h_0_n(m_c=mc, f_orb=dat.f_gw.values/2 * u.Hz,
 fig = plt.figure(figsize=(6, 4))
 
 dat_Pala = dat.loc[dat.pala == 1]
+dat_150 = dat.loc[dat.pala == 2]
 mc_Pala = utils.chirp_mass(dat_Pala.m1.values * u.Msun, dat_Pala.m2.values * u.Msun)
 c_Pala = SkyCoord(dat_Pala.x.values, dat_Pala.y.values, dat_Pala.z.values, unit=u.kpc, frame='galactocentric')
 dist_Pala = c_Pala.icrs.distance
-
 ASD_Pala = strain.h_0_n(m_c=mc_Pala, f_orb=dat_Pala.f_gw.values/2 * u.Hz,  
                         ecc=np.zeros(len(mc_Pala)), dist=dist_Pala, 
                         n=2, position=None, polarisation=None, 
                         inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
+mc_150 = utils.chirp_mass(dat_150.m1.values * u.Msun, dat_150.m2.values * u.Msun)
+c_150 = SkyCoord(dat_150.x.values, dat_150.y.values, dat_150.z.values, unit=u.kpc, frame='galactocentric')
+dist_150 = c_150.icrs.distance
+ASD_150 = strain.h_0_n(m_c=mc_150, f_orb=dat_150.f_gw.values/2 * u.Hz,
+                        ecc=np.zeros(len(mc_150)), dist=dist_150,
+                        n=2, position=None, polarisation=None,
+                        inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
-plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange)
+
+plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange, zorder=3)
+plt.scatter(dat_150.f_gw, ASD_150.flatten(), label='150 pc sample', s=30, c=orange, zorder=1)
 plt.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
 plt.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
 plt.xlim(10**(-4.5), 10**(-2.5))
