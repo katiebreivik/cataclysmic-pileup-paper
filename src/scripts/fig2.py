@@ -82,9 +82,9 @@ ASD_150 = strain.h_0_n(m_c=mc_150, f_orb=dat_150.f_gw.values/2 * u.Hz,
                         inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
 
-plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange, zorder=3)
-plt.scatter(dat_150.f_gw, ASD_150.flatten(), label='150 pc sample', s=30, c=orange, zorder=1)
-plt.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal)
+plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange, zorder=3, rasterized=True)
+plt.scatter(dat_150.f_gw, ASD_150.flatten(), label='150 pc sample', s=30, c=orange, zorder=1, rasterized=True)
+plt.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal, rasterized=True)
 plt.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
 plt.xlim(10**(-4.5), 10**(-2.5))
 plt.ylim(10**(-20), 10**(-16))
