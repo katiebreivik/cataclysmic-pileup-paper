@@ -61,8 +61,11 @@ ASD = strain.h_0_n(m_c=mc, f_orb=dat.f_gw.values/2 * u.Hz,
                    n=2, position=None, polarisation=None, 
                    inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
-fig = plt.figure(figsize=(6, 4))
-
+fig, ax = plt.subplots(1,1, figsize=(6, 4.75))
+ax1 = ax.twiny()
+ax1.set_xlim(2/(10**(-4.5))/60, 2/(10**(-2.5))/60)
+ax1.set_xscale('log')
+ax1.set_xlabel(r"P$_{\rm{orb}}$ [min]")
 dat_Pala = dat.loc[dat.pala == 1]
 dat_150 = dat.loc[dat.pala == 2]
 mc_Pala = utils.chirp_mass(dat_Pala.m1.values * u.Msun, dat_Pala.m2.values * u.Msun)
@@ -82,18 +85,18 @@ ASD_150 = strain.h_0_n(m_c=mc_150, f_orb=dat_150.f_gw.values/2 * u.Hz,
                         inclination=None, interpolated_g=None) * np.sqrt(4 * 3.155e7)
 
 
-plt.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange, zorder=3, rasterized=True)
-plt.scatter(dat_150.f_gw, ASD_150.flatten(), label='150 pc sample', s=30, c=orange, zorder=1, rasterized=True)
-plt.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal, rasterized=True)
-plt.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
-plt.xlim(10**(-4.5), 10**(-2.5))
-plt.ylim(10**(-20), 10**(-16))
-plt.xlabel('GW frequency [Hz]', size=12)
-plt.ylabel('ASD [Hz$^{-1/2}$]', size=12)
-plt.tick_params('both', labelsize=10)
-plt.xscale('log')
-plt.yscale('log')
-plt.legend(prop={'size':12})
+ax.scatter(dat_Pala.f_gw, ASD_Pala.flatten(), label='Pala+2020', s=40, edgecolors='black', linewidths=0.75, c=orange, zorder=3, rasterized=True)
+ax.scatter(dat_150.f_gw, ASD_150.flatten(), label='150 pc sample', s=30, c=orange, zorder=1, rasterized=True)
+ax.scatter(dat.f_gw, ASD.flatten(), label='1 kpc sample', s=10, alpha=0.5, zorder=0, c=teal, rasterized=True)
+ax.plot(frequency_range.value, LISA.value**0.5, lw=2, c='black', ls='--', label='instrument noise')   
+ax.set_xlim(10**(-4.5), 10**(-2.5))
+ax.set_ylim(10**(-20), 10**(-16))
+ax.set_xlabel('GW frequency [Hz]', size=12)
+ax.set_ylabel('ASD [Hz$^{-1/2}$]', size=12)
+ax.tick_params('both', labelsize=10)
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.legend(prop={'size':12})
 plt.tight_layout()
 
 plt.savefig(paths.figures / "fig2.pdf")

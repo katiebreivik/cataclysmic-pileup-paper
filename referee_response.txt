@@ -1,0 +1,39 @@
+We appreciate the referee's careful study of our paper and respond to the comments and questions below inline. Changes to the manuscript are highlighted in bold and referenced by paragraph in the referee response. We hope the referee finds this newly submitted manuscript publishable by MNRAS Letters.
+
+Abstract: I would define what a CV is in here and also include the value of the minimum orbital period that is mentioned.
+ --> We have added two clarifications, one in sentence 2 and one in sentence 8. 
+
+Introduction: 
+In the third paragraph, it would be useful to include the LISA frequency range corresponding to the orbital period range.
+--> We have included the LISA frequency range corresponding to the orbital period range in paragraph 3.
+
+Beginning p2: rho_CV is not defined.
+--> We have now clarified that rho_CV and rho_AMCvn are space densities.
+
+3rd paragraph on p2, about the reason for the period gap: This paragraph is hard to follow, with a lot of jargon (the mass-radius index, an adiabatic value, a stellar vs non-stellar object…).  I would rephrase and/or add more context.
+--> We have added a definition of the mass-radius index, clarified that adiabatic mass loss is faster than the radius can respond, and clarified sub-stellar.
+
+Section 2:
+Second paragraph:
+-I believe something is missing in the first sentence.
+--> We have reworded the first sentence.
+-How was equation 1 obtained?
+--> This equation was obtained empirically such that the period gap limits are enforced during our sampling procedure.
+
+Section 3:
+Second to last paragraph: I’m not sure if the considered LDC population does or does not contain interacting binaries given the sentence “For this study, we use the same Galactic population as was used for the LDC2a-v1 data set provided by the LISA Data Chal- lenges (LDCs) (Le Jeune & Babak 2022) which consisted of only de-tached double WD binaries”  and then just after « one which contains detached and accreting double WD binaries from the LDC “.  This seems to be a contradiction.
+*** WE STILL NEED TO CLARIFY THIS **
+
+Section 4:
+-       ASD is undefined, I think.
+-       Fig2: It would be useful to have the period on the top axis.
+            --> We have added the orbital period on the top axis.
+-       Fig2: I guess this figure does not include DWD confusion noise?
+            --> This is correct; we have clarified this in the caption.
+-       End of 2nd paragraph on p4: it’s-> its
+            --> We appreciate the catch from the referee and have fixed the typo. 
+-       Same sentence: I am not sure I follow the argument here: are you expecting most of the science to be coming from the foreground because the absence of frequency derivative implies lack of chirp mass/distance measurement, which limits the identification of the objects?
+    --> This is exactly the reasoning; we have added a clarifying sentence. 
+
+-       Second paragraph on p5: I am not sure I understand the implication here: The sources will stop interacting, but they are still emitting GWs. Does this mean that effectively there will be a continuum and without EM counterpart we cannot make any distinction? The measurable feature will only be a pile-up around 80 min? I agree that interacting and non-interaction populations have slightly different evolutions, but given the small population, can we expect this effect to be measurable?
+    --> 
