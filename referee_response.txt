@@ -1,4 +1,4 @@
-We appreciate the referee's careful study of our paper and respond to the comments and questions below inline. Changes to the manuscript are highlighted in bold and referenced by paragraph in the referee response. We hope the referee finds this newly submitted manuscript publishable by MNRAS Letters.
+We appreciate the referee's careful study of our paper and respond to the comments and questions below inline. Changes to the manuscript are highlighted in bold and referenced by paragraph in the referee response. We hope the referee finds this newly submitted manuscript adeguate.
 
 Abstract: I would define what a CV is in here and also include the value of the minimum orbital period that is mentioned.
  --> We have added two clarifications, one in sentence 2 and one in sentence 8. 
@@ -22,10 +22,11 @@ Second paragraph:
 
 Section 3:
 Second to last paragraph: I’m not sure if the considered LDC population does or does not contain interacting binaries given the sentence “For this study, we use the same Galactic population as was used for the LDC2a-v1 data set provided by the LISA Data Chal- lenges (LDCs) (Le Jeune & Babak 2022) which consisted of only de-tached double WD binaries”  and then just after « one which contains detached and accreting double WD binaries from the LDC “.  This seems to be a contradiction.
-*** WE STILL NEED TO CLARIFY THIS **
+--> We appreciate the referee pointing out the inconsistency. We have ammended the text to clarify that both detached and interacting double WD binaries are included.
 
 Section 4:
 -       ASD is undefined, I think.
+            --> ASD is defined just after equation 6 on page 3.
 -       Fig2: It would be useful to have the period on the top axis.
             --> We have added the orbital period on the top axis.
 -       Fig2: I guess this figure does not include DWD confusion noise?
@@ -36,4 +37,7 @@ Section 4:
     --> This is exactly the reasoning; we have added a clarifying sentence. 
 
 -       Second paragraph on p5: I am not sure I understand the implication here: The sources will stop interacting, but they are still emitting GWs. Does this mean that effectively there will be a continuum and without EM counterpart we cannot make any distinction? The measurable feature will only be a pile-up around 80 min? I agree that interacting and non-interaction populations have slightly different evolutions, but given the small population, can we expect this effect to be measurable?
-    --> 
+    --> This is a very interesting point. We currently do not know how CVs would evolve through the period gap, but we do think it will not be a smooth continuum in the orbital period distribution of CVs from above to below the gap. In fact structures in the gap population orbital distribution may reveal constraints on the AML mechanism within the gap, which may well be a combitantion of magnetic breaking and GW radiation. Although the latter mechanism is well established, magnetic breaking is very uncertain, and we do not feel a good prediction can be made. In any case, looking at Fig. 2 it will be difficult for LISa to detect a substantial population in the period gap.
+
+
+
