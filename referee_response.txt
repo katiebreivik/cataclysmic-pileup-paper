@@ -1,4 +1,4 @@
-We appreciate the referee's careful study of our paper and respond to the comments and questions below inline. Changes to the manuscript are highlighted in bold and referenced by paragraph in the referee response. We hope the referee finds this newly submitted manuscript adeguate.
+We appreciate the referee's careful study of our paper and respond to the comments and questions below inline. Changes to the manuscript are highlighted in bold and referenced by paragraph in the referee response. We hope the referee finds this newly submitted manuscript adequate.
 
 Abstract: I would define what a CV is in here and also include the value of the minimum orbital period that is mentioned.
  --> We have added two clarifications, one in sentence 2 and one in sentence 8. 
