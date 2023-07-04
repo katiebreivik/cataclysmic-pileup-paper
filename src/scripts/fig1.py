@@ -78,7 +78,6 @@ ix = porbGrid >= (cut4/60)
 modelCDF[ix] = cdf5[ix]
 
 
-
 fig = plt.figure(figsize=(6, 4))
 ax1 = fig.add_subplot(111)
 ax1.hist(PT.porb/60, density=True, histtype='step', bins=50, label='Pala+2020', lw=1.5, color=orange)
@@ -97,7 +96,7 @@ palaCDF = palaCDF / np.max(palaCDF)
 #plot PT.porb vs palaCDF on right y-axis using dotted line
 ax2 = plt.gca().twinx()
 PT = PT.sort_values(by='porb')
-ax2.step(PT.porb/60, palaCDF, color=orange, linestyle='dotted', label='Pala+2020 CDF', lw=1.5)
+ax2.step(PT.porb.values/60, palaCDF, color=orange, linestyle='dotted', label='Pala+2020 CDF', lw=1.5)
 # make staircase plot
 
 
